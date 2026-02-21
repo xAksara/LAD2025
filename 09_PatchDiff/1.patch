@@ -1,0 +1,23 @@
+--- lab.c	2026-02-22 02:10:32.338907538 +0300
++++ lab1.c	2026-02-22 02:12:19.234561218 +0300
+@@ -117,8 +117,19 @@
+ }
+ 
+ int main(int argc, char *argv[]) {
++    if (argc != 2) {
++        fprintf(stderr, "wrong arguments\n");
++        return 1;
++    }
++    int in = atoi(argv[1]);
++    if (in < 1 || in > 100) {
++        fprintf(stderr, "size must be from [1,100]\n");
++        return 1;
++    }
++    n = in;
++
+     srand(time(NULL));
+-    n = 6;
++
+     size_t size;
+     struct Edge *graph = kraskal(&size);
+     draw(graph, size);

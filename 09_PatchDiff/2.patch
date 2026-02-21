@@ -1,0 +1,75 @@
+--- lab1.c	2026-02-22 02:12:19.234561218 +0300
++++ lab2.c	2026-02-22 02:12:23.178485613 +0300
+@@ -1,6 +1,7 @@
+ #include <stdint.h>
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <string.h>
+ #include <time.h>
+ 
+ static unsigned n;
+@@ -86,16 +87,16 @@
+     return result;
+ }
+ 
+-void draw(struct Edge *g, size_t g_size) {
++void draw(struct Edge *g, size_t g_size, char dot, char sharp) {
+     size_t size = 2 * n + 1;
+     char field[size][size];
+     for (size_t i = 0; i < size; ++i)
+         for (size_t j = 0; j < size; ++j)
+-            field[i][j] = '#';
++            field[i][j] = sharp;
+ 
+     for (size_t i = 0; i < n; ++i)
+         for (size_t j = 0; j < n; ++j)
+-            field[2 * i + 1][2 * j + 1] = '.';
++            field[2 * i + 1][2 * j + 1] = dot;
+ 
+     for (size_t k = 0; k < g_size; ++k) {
+         int v1 = g[k].v1;
+@@ -103,9 +104,9 @@
+         int row = v1 / n;
+         int col = v1 % n;
+         if (v2 == v1 + 1) {
+-            field[2 * row + 1][2 * col + 2] = '.';
++            field[2 * row + 1][2 * col + 2] = dot;
+         } else if (v2 == v1 + n) {
+-            field[2 * row + 2][2 * col + 1] = '.';
++            field[2 * row + 2][2 * col + 1] = dot;
+         }
+     }
+ 
+@@ -117,11 +118,17 @@
+ }
+ 
+ int main(int argc, char *argv[]) {
+-    if (argc != 2) {
++    if (argc != 3) {
+         fprintf(stderr, "wrong arguments\n");
+         return 1;
+     }
+-    int in = atoi(argv[1]);
++
++    if (strlen(argv[1]) != 2) {
++        fprintf(stderr, "first parameter must contains only 2 chars\n");
++        return 1;
++    }
++
++    int in = atoi(argv[2]);
+     if (in < 1 || in > 100) {
+         fprintf(stderr, "size must be from [1,100]\n");
+         return 1;
+@@ -129,10 +136,9 @@
+     n = in;
+ 
+     srand(time(NULL));
+-
+     size_t size;
+     struct Edge *graph = kraskal(&size);
+-    draw(graph, size);
++    draw(graph, size, argv[1][0], argv[1][1]);
+     free(graph);
+     return 0;
+ }
+\ В конце файла нет новой строки

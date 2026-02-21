@@ -1,0 +1,38 @@
+--- lab2.c	2026-02-22 02:12:23.178485613 +0300
++++ lab3.c	2026-02-22 02:14:45.551881488 +0300
+@@ -118,27 +118,29 @@
+ }
+ 
+ int main(int argc, char *argv[]) {
+-    if (argc != 3) {
++    if (argc != 4) {
+         fprintf(stderr, "wrong arguments\n");
+         return 1;
+     }
+ 
+-    if (strlen(argv[1]) != 2) {
++    int rnd = atoi(argv[1]);
++
++    if (strlen(argv[2]) != 2) {
+         fprintf(stderr, "first parameter must contains only 2 chars\n");
+         return 1;
+     }
+ 
+-    int in = atoi(argv[2]);
++    int in = atoi(argv[3]);
+     if (in < 1 || in > 100) {
+         fprintf(stderr, "size must be from [1,100]\n");
+         return 1;
+     }
+     n = in;
+ 
+-    srand(time(NULL));
++    srand(rnd);
+     size_t size;
+     struct Edge *graph = kraskal(&size);
+-    draw(graph, size, argv[1][0], argv[1][1]);
++    draw(graph, size, argv[2][0], argv[2][1]);
+     free(graph);
+     return 0;
+ }
+\ В конце файла нет новой строки
