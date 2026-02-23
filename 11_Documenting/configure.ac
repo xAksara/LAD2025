@@ -2,9 +2,10 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.71])
-AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
+AC_INIT([guesser], [1.0.0], [a@a.a])
 AM_INIT_AUTOMAKE([foreign])
-
+DX_INIT_DOXYGEN([guesser])
+LT_INIT([disable-static])
 AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_REQUIRE_VERSION(0.21)
 
@@ -21,10 +22,12 @@ AC_PROG_CC
 # Checks for header files.
 AC_CHECK_HEADERS([libintl.h])
 
+
+
 # Checks for typedefs, structures, and compiler characteristics.
 
 # Checks for library functions.
 AC_CHECK_FUNCS([setlocale])
 
-AC_CONFIG_FILES([Makefile po/Makefile.in src/Makefile])
+AC_CONFIG_FILES([Makefile po/Makefile.in src/Makefile Doxyfile])
 AC_OUTPUT

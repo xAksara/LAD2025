@@ -1,3 +1,24 @@
+/** @mainpage guesser
+ * @copydetails library
+ */
+
+/** @page library
+ * A program for lab11. Guess the hidden number. 
+ * @section SYNOPSIS
+ * `guesser [-r | --help]`
+ *
+ * @section DESCRIPTION
+ * The program Guess the hidden number using half division method.
+ *
+ * @b -r
+ * @n print numerals in Roman
+ *
+ * @b --help
+ * @n display the program's help and exit
+ * @section AUTHORS
+ * github.com/xAksara 
+ */
+
 /**
  * @file guesser.c
  * @author I (a@a.a)
@@ -90,15 +111,14 @@ void print_help(char *prog, FILE *f) {
  * @param use_roman flags is function must return roman
  * @return char* result string
  */
-char *get_str_num(int n, int use_roman) {
-    static char buf[4];
+char *get_str_num(int n, int use_roman, char *buf) {
     if (n > 100 || n < 1) return "";
     if (use_roman)
-        return int_to_roman(n);
+        sprintf(buf, "%s", int_to_roman(n));
     else {
         sprintf(buf, "%d", n);
-        return buf;
     }
+    return buf;
 }
 
 int main(int argc, char *argv[]) {
@@ -124,13 +144,14 @@ int main(int argc, char *argv[]) {
     bindtextdomain("guesser", LOCALE_PATH);
     textdomain("guesser");
 
-    printf(_("guess the number from %s to %s and press any key\n"), get_str_num(1, use_roman), get_str_num(100, use_roman));
+    char buf1[10], buf2[10];
+    printf(_("guess the number from %s to %s and press any key\n"), get_str_num(1, use_roman, buf1), get_str_num(100, use_roman, buf2));
     getchar();
     
     int left = 1, right = 100;
     while(left < right) {
         int n = (left + right) / 2;
-        printf(_("is the number greater than %s? (y/n)\n"), get_str_num(n, use_roman));
+        printf(_("is the number greater than %s? (y/n)\n"), get_str_num(n, use_roman, buf1));
         char c;
         int res = scanf(" %c", &c);
         if (res == EOF)
@@ -143,6 +164,6 @@ int main(int argc, char *argv[]) {
             fprintf(stderr, _("wrong answer. Please use 'y' or 'n'\n"));
         }
     }
-    printf(_("guessed number is %s\n"), get_str_num(left, use_roman));
+    printf(_("guessed number is %s\n"), get_str_num(left, use_roman, buf1));
     return 0;
 }
